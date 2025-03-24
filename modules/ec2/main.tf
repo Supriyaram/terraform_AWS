@@ -23,22 +23,15 @@ resource "aws_security_group" "this" {
   }
 }
 
-
 # Create EC2 Instance
 resource "aws_instance" "this" {
   ami           = var.ami_id
   instance_type = var.instance_type
   key_name      = aws_key_pair.this.key_name
   vpc_security_group_ids = [aws_security_group.this.id]  #Attach security group to ec2, if not specifed default sg will be attached
+    
   tags = {
     "Name" = "terraform_ec2"
-  }
-
-  # Configure Root Volume
-  root_block_device {
-    volume_size           = 8          # 8 GB volume
-    volume_type           = "gp2"      # General Purpose SSD
-    delete_on_termination = true       # Delete volume on instance termination
   }
 
   # Add User Data (Script for bootstrapping)
@@ -47,3 +40,26 @@ resource "aws_instance" "this" {
   # Attach the IAM Role
   iam_instance_profile = var.instance_profile
 }
+
+resource "aws_ebs_volume" "this" {
+  availability_zone = var.availability_zone
+  size              = var.ebs_volume_size
+  tags = {
+    Name = "ec2_volume"
+  }
+}
+
+resource "aws_volume_attachment" "this" {
+  device_name  = "/dev/sdf"                  # Device name for Linux instances
+  volume_id    = aws_ebs_volume.this.id
+  instance_id  = aws_instance.this.id
+}
+resource "aws_ebs_snapshot" "this" {
+  volume_id = aws_ebs_volume.this.id
+
+  tags = {
+    Name = "ec2_volume_snap"
+  }
+}
+
+#

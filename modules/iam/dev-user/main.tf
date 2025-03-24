@@ -23,7 +23,7 @@ resource "aws_iam_policy_attachment" "this" {
 }
 
 
-resource "aws_iam_role" "ec2_role" {
+resource "aws_iam_role" "this" {
   name = "ec2_role"
   assume_role_policy = jsonencode({
     Version = "2012-10-17"
@@ -39,14 +39,14 @@ resource "aws_iam_role" "ec2_role" {
   })
 }
 
-resource "aws_iam_role_policy_attachment" "ec2-attach" {
-  role       = aws_iam_role.ec2_role.name
+resource "aws_iam_role_policy_attachment" "this" {
+  role       = aws_iam_role.this.name
   policy_arn = var.policy_arn
 }
 
 
 # Create IAM Instance Profile for EC2, allows EC2 to use the role
-resource "aws_iam_instance_profile" "ec2_profile" {
+resource "aws_iam_instance_profile" "this" {
   name = "ec2-instance-profile"
-  role = aws_iam_role.ec2_role.name
+  role = aws_iam_role.this.name
 }

@@ -17,8 +17,8 @@ output "instance_public_ip" {
   value       = module.ec2_instance.public_ip
 }
 
-output "sg_name" {
-  description = "name of sg created"
-  value = module.ec2_instance.sg_name
+output "security_group_name" {
+  description = "name of security group created"
+  value = module.ec2_instance.security_group_name
 }
 

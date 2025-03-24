@@ -22,3 +22,21 @@ variable "instance_profile" {
   description = "instance profile"
   type = string
 }
+
+variable "availability_zone" {
+  description = "AZ in region"
+  type = string
+  
+}
+
+variable "ebs_volume_size" {
+  description = "The size of the drive in GiBs"
+  type = number
+}
+
+variable "bucket_name" {
+  description = "Globally unique name for the S3 bucket"
+  type        = string
+  default = "supriya0304-terraform-s3-bucket"
+}
+

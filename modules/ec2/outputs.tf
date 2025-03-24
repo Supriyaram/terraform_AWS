@@ -8,7 +8,7 @@ output "key_name" {
   value       = aws_key_pair.this.key_name
 }
 
-output "sg_name" {
+output "security_group_name" {
   description = "name of sg created"
   value = aws_security_group.this.name  
 }

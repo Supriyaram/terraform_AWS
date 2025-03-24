@@ -17,5 +17,17 @@ module "ec2_instance" {
   key_name               = var.key_name
   public_key_path        = var.public_key_path
   instance_profile       = var.instance_profile
+  availability_zone = var.availability_zone
+  ebs_volume_size = var.ebs_volume_size
+}
 
+module "s3" {
+  source = "../../modules/s3"
+  bucket_name = var.bucket_name
+}
+
+module "vpc" {
+  source = "../../modules/vpc"
+  
+  
 }
