@@ -1,6 +1,6 @@
 #Create VPC
 resource "aws_vpc" "this" {
-  cidr_block = "10.0.0.0/16"
+  cidr_block = var.vpc_cidr
   enable_dns_support = true
   enable_dns_hostnames = true
 
@@ -12,11 +12,12 @@ resource "aws_vpc" "this" {
 # Create a Public Subnet
 resource "aws_subnet" "this" {
   vpc_id                  = aws_vpc.this.id
-  cidr_block              = "10.0.1.0/24"
-  map_public_ip_on_launch = true
-
-  tags = {
-    Name = "Public Subnet"
+  cidr_block              = var.subnet_cidr
+  map_public_ip_on_launch = true            #this is making the subnet public, The map_public_ip_on_launch = true parameter 
+                                            #automatically assigns a Public IP to instances in the subnet when they are launched.
+                                            
+  tags = {                                 #If this value were set to false, even if a subnet had a route to an Internet Gateway, 
+    Name = "Public Subnet"                      #the instance would not be accessible without assigning an Elastic IP (EIP) or using a NAT Gateway.
   }
 }
 

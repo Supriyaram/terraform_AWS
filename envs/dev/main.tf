@@ -24,10 +24,13 @@ module "ec2_instance" {
 module "s3" {
   source = "../../modules/s3"
   bucket_name = var.bucket_name
+  object_key = var.object_key
+  enable_versioning = true
+  files_to_upload =  var.files_to_upload
 }
 
 module "vpc" {
   source = "../../modules/vpc"
-  
-  
+  vpc_cidr = var.vpc_cidr
+  subnet_cidr = var.subnet_cidr 
 }

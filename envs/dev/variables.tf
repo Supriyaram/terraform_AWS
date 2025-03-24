@@ -40,3 +40,25 @@ variable "bucket_name" {
   default = "supriya0304-terraform-s3-bucket"
 }
 
+variable "object_key" {
+    description = "key of an object"
+    type = string 
+}
+
+variable "vpc_cidr" {
+    description = "cidr block for VPC"
+    type = string
+    
+}
+
+variable "subnet_cidr" {
+    description = "cidr block for subnet"
+    type = string
+    
+}
+
+variable "files_to_upload" {
+    description = "Map of files to upload"
+    type        = map(string)
+}
+

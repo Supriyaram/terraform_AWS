@@ -22,3 +22,8 @@ output "security_group_name" {
   value = module.ec2_instance.security_group_name
 }
 
+output "s3_website_url" {
+  description = "The URL of the static website hosted on S3"
+  value       = module.s3.website_url
+}
+
