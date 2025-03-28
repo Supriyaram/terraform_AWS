@@ -1,6 +1,3 @@
-Here’s a well-structured and clear version for your **README.md** file:  
-
----
 
 ### **Getting Started with Terraform**  
 
