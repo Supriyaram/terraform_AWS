@@ -60,4 +60,11 @@ resource "aws_s3_object" "upload" {
   etag = filemd5(each.value) # Ensures file is only uploaded if it has changed
 }
 
+#enabling versioning
+resource "aws_s3_bucket_versioning" "this" {    #can't enable versioning directly within aws_s3_bucket; 
+  bucket = aws_s3_bucket.this.id                   #it needs to be configured using aws_s3_bucket_versioning
 
+  versioning_configuration {
+    status = "Enabled"
+  }
+}
