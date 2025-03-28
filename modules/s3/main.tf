@@ -2,11 +2,35 @@
 #create s3 bucket
 resource "aws_s3_bucket" "this" {
   bucket = var.bucket_name
+  # policy = data.aws_iam_policy_document.this #"policy" is deprecated:
 
   tags = {
     Name  = "ec2-bucket"
   }
 }
+
+#policy to allow all access to s3
+data "aws_iam_policy_document" "this" { #data- a data source that helps generate an IAM policy document inside Terraform, 'resource' will create new resource
+  statement {                           #It does not create a new resource but constructs a policy JSON that can be referenced in Terraform configuration.
+    sid    = "AllowFullAccessToMyself"
+    effect = "Allow"
+
+    principals {
+      type        = "AWS"
+      identifiers = ["arn:aws:iam::203918864735:user/dev-user"]  
+    }
+
+    actions   = ["s3:*"]
+    resources = ["${aws_s3_bucket.this.arn}"]
+  }
+}
+
+#this attaches the policy to bucket
+resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
+  bucket = aws_s3_bucket.this.id
+  policy = data.aws_iam_policy_document.this.json
+}
+
 
 
 #policy to make bucket publicly available on www

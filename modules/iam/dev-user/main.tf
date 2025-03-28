@@ -1,7 +1,7 @@
-# creates iam_user
-resource "aws_iam_user" "this" {
-  name = var.user_name
-}
+# # creates iam_user
+# resource "aws_iam_user" "this" {
+#   name = var.user_name
+# }
 
 # creates Iam_group
 resource "aws_iam_group" "this" {
@@ -11,7 +11,7 @@ resource "aws_iam_group" "this" {
 # attaches user to group 
 resource "aws_iam_group_membership" "this" {
   name  = "${var.group_name}-membership"
-  users = [aws_iam_user.this.name]
+  users = [var.user_name]
   group = aws_iam_group.this.name
 }
 

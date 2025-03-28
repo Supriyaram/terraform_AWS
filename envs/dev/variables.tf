@@ -3,6 +3,11 @@ variable "aws_region" {
     default = "us-east-1"
 }
 
+variable "user_name" {
+    description = "The IAM username"
+    type        = string
+}
+
 variable "key_name" {
   description = "Name for the key pair"
   type        = string

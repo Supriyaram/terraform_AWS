@@ -1,6 +1,6 @@
 output "user_arn" {
   description = "The ARN of the IAM user"
-  value       = aws_iam_user.this.arn
+  value       = var.user_name
 }
 
 output "group_name" {

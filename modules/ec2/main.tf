@@ -41,6 +41,7 @@ resource "aws_instance" "this" {
   iam_instance_profile = var.instance_profile
 }
 
+# create volume 
 resource "aws_ebs_volume" "this" {
   availability_zone = var.availability_zone
   size              = var.ebs_volume_size
@@ -49,11 +50,15 @@ resource "aws_ebs_volume" "this" {
   }
 }
 
+# attach volume to ec2 instance
 resource "aws_volume_attachment" "this" {
   device_name  = "/dev/sdf"                  # Device name for Linux instances
   volume_id    = aws_ebs_volume.this.id
   instance_id  = aws_instance.this.id
 }
+
+# create snapshot for volume, used while disaster recovery
+# we can create policy 'aws_dlm_lifecycle_policy' to automate snapshots (daily or weekly) using Data LIfecycle Manager(DLM)
 resource "aws_ebs_snapshot" "this" {
   volume_id = aws_ebs_volume.this.id
 
@@ -63,4 +68,3 @@ resource "aws_ebs_snapshot" "this" {
 }
 
 
-#
