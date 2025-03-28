@@ -9,7 +9,7 @@ resource "aws_s3_bucket" "this" {
   }
 }
 
-#policy to allow all access to s3
+#policy to access * for dev-user
 data "aws_iam_policy_document" "this" { #data- a data source that helps generate an IAM policy document inside Terraform, 'resource' will create new resource
   statement {                           #It does not create a new resource but constructs a policy JSON that can be referenced in Terraform configuration.
     sid    = "AllowFullAccessToMyself"
@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "this" { #data- a data source that helps generate
   }
 }
 
-#this attaches the policy to bucket
+# attaches the above policy to bucket
 resource "aws_s3_bucket_policy" "allow_access_from_another_account" {
   bucket = aws_s3_bucket.this.id
   policy = data.aws_iam_policy_document.this.json
@@ -50,6 +50,7 @@ resource "aws_s3_bucket_policy" "this" {
     ]
   })
 }
+
 #enables static hosting for bucket
 resource "aws_s3_bucket_website_configuration" "this" {
   bucket = aws_s3_bucket.this.id

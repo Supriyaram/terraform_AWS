@@ -1,8 +1,8 @@
 module "iam_user" {
   source            = "../../modules/iam/dev-user"
-  user_name         = "dev-user"
-  group_name        = "developers"
-  policy_arn        = "arn:aws:iam::aws:policy/AdministratorAccess"
+  user_name         = var.user_name
+  group_name        = var.group_name
+  policy_arns      = var.policy_arns
   tags = {
     Environment     = "dev"
     Owner           = "DevOps"

@@ -41,6 +41,7 @@ resource "aws_instance" "this" {
   iam_instance_profile = var.instance_profile
 }
 
+
 # create volume 
 resource "aws_ebs_volume" "this" {
   availability_zone = var.availability_zone

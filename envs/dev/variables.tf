@@ -7,7 +7,22 @@ variable "user_name" {
     description = "The IAM username"
     type        = string
 }
+variable "group_name" {
+    description = "The IAM group name"
+    type        = string
+}
 
+variable "policy_arns" {
+    description = "The ARN of the policy to attach"
+    type        = list(string)
+    default = [
+    "arn:aws:iam::aws:policy/AmazonS3FullAccess",
+    "arn:aws:iam::aws:policy/AmazonEC2FullAccess",
+    "arn:aws:iam::aws:policy/IAMFullAccess",
+    "arn:aws:iam::aws:policy/AWSLambda_FullAccess",
+    "arn:aws:iam::aws:policy/AmazonVPCFullAccess"
+  ]
+}
 variable "key_name" {
   description = "Name for the key pair"
   type        = string

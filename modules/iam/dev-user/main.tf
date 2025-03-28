@@ -17,9 +17,10 @@ resource "aws_iam_group_membership" "this" {
 
 #attaches policy to group
 resource "aws_iam_policy_attachment" "this" {
-  name       = "${var.user_name}-policy-attachment"
+  for_each   = toset(var.policy_arns)
+  name       = "${var.user_name}-${each.value}-attachment"
   groups     = [aws_iam_group.this.name]
-  policy_arn = var.policy_arn
+  policy_arn = each.value
 }
 
 #creates Iam role for ec2 to asssumeRole(mandatory)
@@ -33,7 +34,12 @@ resource "aws_iam_role" "this" {
         Action = "sts:AssumeRole"
         Effect = "Allow"
         Principal = {
-          Service = "ec2.amazonaws.com"
+          Service = [
+            "ec2.amazonaws.com",
+            "lambda.amazonaws.com",
+            "s3.amazonaws.com"
+          ]
+          
         }
       },
     ]

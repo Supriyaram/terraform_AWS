@@ -8,9 +8,9 @@ variable "group_name" {
     type        = string
 }
 
-variable "policy_arn" {
-    description = "The ARN of the policy to attach"
-    type        = string
+variable "policy_arns" {
+  type    = list(string)
+  
 }
 
 variable "tags" {
